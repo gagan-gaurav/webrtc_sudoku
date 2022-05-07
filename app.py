@@ -1,4 +1,3 @@
-from tkinter import image_names
 import streamlit as st
 from streamlit_webrtc import webrtc_streamer
 import av
@@ -42,7 +41,7 @@ class VideoProcessor:
 			imgSolvedDigits = imgBlank.copy()
 			boxes = splitBoxes(imgWarpColored)
 			refine_boxes = clean_squares(boxes)
-			print(len(boxes))
+			# print(len(boxes))
 			
 			### PREDICTION
 			numbers = getPredection(refine_boxes, model)
@@ -51,7 +50,7 @@ class VideoProcessor:
 			imgDetectedDigits = displayNumbers(imgDetectedDigits, numbers, color=(255, 0, 255))
 			numbers = np.asarray(numbers)
 			posArray = np.where(numbers > 0, 0, 1)
-			print(posArray)
+			# print(posArray)
 
 			## SOLVING THE BOARD
 			board = np.array_split(numbers,9)
@@ -95,12 +94,14 @@ class VideoProcessor:
 		return av.VideoFrame.from_ndarray(final_image, format="bgr24")
 
 
-webrtc_streamer(key="example", video_processor_factory=VideoProcessor)
-
-ctx = webrtc_streamer(
-    key="example",
-    video_processor_factory=VideoProcessor,
-    rtc_configuration={  # Add this line
+webrtc_streamer(key="example", video_processor_factory=VideoProcessor, rtc_configuration={  # Add this line
         "iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]
-    }
-)
+    })
+
+# ctx = webrtc_streamer(
+#     key="example",
+#     video_processor_factory=VideoProcessor,
+#     rtc_configuration={  # Add this line
+#         "iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]
+#     }
+# )
