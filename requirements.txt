@@ -2,5 +2,5 @@ tensorflow==2.7.0
 numpy
 opencv-python-headless==4.5.5.62
 streamlit>=1.8.1
-streamlit-webrtc==0.37.0
+streamlit-webrtc==0.43.4
 protobuf~=3.19.0
